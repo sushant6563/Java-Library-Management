@@ -31,8 +31,8 @@ Before you begin, ensure that you have the following software installed:
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/your-username/library-management-system.git
-    cd library-management-system
+    git clone https://github.com/sushant6563/Java-Management.git
+    cd Library-Management
     ```
 
 2. **Install dependencies** (If using Maven):

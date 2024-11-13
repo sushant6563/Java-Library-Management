@@ -83,10 +83,6 @@ Before you begin, ensure that you have the following software installed:
 
 ---
 
-## 💻 Example Screenshots
-
-![Library Management System](https://via.placeholder.com/800x400.png?text=Screenshot+1)  
-*Main Dashboard of the Library Management System*
 
 ---
 

@@ -1,0 +1,171 @@
+Database Schema for Library Management System
+
+
+-- ===========================================
+-- Create the database
+-- ===========================================
+CREATE DATABASE IF NOT EXISTS library_management;
+USE library_management;
+
+-- ===========================================
+-- Create table for Authors
+-- ===========================================
+CREATE TABLE IF NOT EXISTS authors (
+    author_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    date_of_birth DATE,
+    date_of_death DATE,
+    bio TEXT
+);
+
+-- ===========================================
+-- Create table for Books
+-- ===========================================
+CREATE TABLE IF NOT EXISTS books (
+    book_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    genre VARCHAR(100),
+    publication_date DATE,
+    isbn VARCHAR(20) UNIQUE,
+    author_id INT,
+    total_copies INT DEFAULT 0,
+    available_copies INT DEFAULT 0,
+    FOREIGN KEY (author_id) REFERENCES authors(author_id) ON DELETE SET NULL
+);
+
+-- ===========================================
+-- Create table for Members (Library Users)
+-- ===========================================
+CREATE TABLE IF NOT EXISTS members (
+    member_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    membership_date DATE DEFAULT CURRENT_DATE,
+    email VARCHAR(100) UNIQUE,
+    phone_number VARCHAR(15),
+    address TEXT
+);
+
+-- ===========================================
+-- Create table for Book Transactions (Checkouts and Returns)
+-- ===========================================
+CREATE TABLE IF NOT EXISTS transactions (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
+    book_id INT,
+    member_id INT,
+    checkout_date DATE DEFAULT CURRENT_DATE,
+    return_date DATE,
+    due_date DATE,
+    status ENUM('checked_out', 'returned') DEFAULT 'checked_out',
+    FOREIGN KEY (book_id) REFERENCES books(book_id) ON DELETE CASCADE,
+    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE CASCADE
+);
+
+-- ===========================================
+-- Example data insertion for authors
+-- ===========================================
+INSERT INTO authors (first_name, last_name, date_of_birth, date_of_death, bio) VALUES
+('J.K.', 'Rowling', '1965-07-31', NULL, 'British author, best known for the Harry Potter series.'),
+('George', 'Orwell', '1903-06-25', '1950-01-21', 'English novelist, essayist, journalist and critic.');
+
+-- ===========================================
+-- Example data insertion for books
+-- ===========================================
+INSERT INTO books (title, genre, publication_date, isbn, author_id, total_copies, available_copies) VALUES
+('Harry Potter and the Sorcerer\'s Stone', 'Fantasy', '1997-06-26', '978-0747532699', 1, 5, 5),
+('1984', 'Dystopian', '1949-06-08', '978-0451524935', 2, 3, 3);
+
+-- ===========================================
+-- Example data insertion for members
+-- ===========================================
+INSERT INTO members (first_name, last_name, email, phone_number, address) VALUES
+('John', 'Doe', 'john.doe@example.com', '123-456-7890', '123 Elm Street, Springfield, IL'),
+('Jane', 'Smith', 'jane.smith@example.com', '987-654-3210', '456 Oak Avenue, Springfield, IL');
+
+-- ===========================================
+-- Example data insertion for transactions (Checkout Example)
+-- ===========================================
+INSERT INTO transactions (book_id, member_id, checkout_date, due_date, status) VALUES
+(1, 1, '2024-11-01', '2024-11-14', 'checked_out'),
+(2, 2, '2024-11-05', '2024-11-19', 'checked_out');
+
+
+Explanation of Tables
+authors
+This table stores information about the authors of books.
+Columns:
+author_id: Unique identifier for the author (auto-incremented).
+first_name: First name of the author.
+last_name: Last name of the author.
+date_of_birth: Birth date of the author.
+date_of_death: Death date of the author (if applicable).
+bio: A short biography of the author.
+books
+This table stores details of books available in the library.
+Columns:
+book_id: Unique identifier for the book (auto-incremented).
+title: Title of the book.
+genre: Genre of the book.
+publication_date: Publication date of the book.
+isbn: ISBN number of the book (unique).
+author_id: Foreign key linking the book to an author from the authors table.
+total_copies: Total number of copies available in the library.
+available_copies: Number of copies currently available for checkout.
+members
+This table stores information about the library's members.
+Columns:
+member_id: Unique identifier for the member (auto-incremented).
+first_name: First name of the member.
+last_name: Last name of the member.
+membership_date: Date when the member joined the library.
+email: Email address of the member (unique).
+phone_number: Phone number of the member.
+address: Address of the member.
+transactions
+This table tracks book checkout and return transactions.
+Columns:
+transaction_id: Unique identifier for the transaction (auto-incremented).
+book_id: Foreign key linking to the books table to identify the checked-out book.
+member_id: Foreign key linking to the members table to identify the member who checked out the book.
+checkout_date: The date when the book was checked out.
+return_date: The date when the book was returned.
+due_date: The due date for returning the book.
+status: Status of the transaction, can be 'checked_out' or 'returned'.
+
+Example SQL Queries
+Get all books and their authors:
+
+
+SELECT b.title, a.first_name, a.last_name, b.genre
+FROM books b
+JOIN authors a ON b.author_id = a.author_id;
+
+Get all books currently checked out by a specific member:
+
+
+SELECT b.title, t.checkout_date, t.due_date
+FROM books b
+JOIN transactions t ON b.book_id = t.book_id
+WHERE t.member_id = 1 AND t.status = 'checked_out';
+
+Get all books available in the library:
+
+
+SELECT title, available_copies
+FROM books
+WHERE available_copies > 0;
+
+Return a book:
+
+
+UPDATE transactions
+SET return_date = CURDATE(), status = 'returned'
+WHERE transaction_id = 1;
+
+
+Summary
+authors: Stores author details.
+books: Stores book details and tracks the number of available copies.
+members: Stores library member details.
+transactions: Tracks book checkout/return transactions with due dates and statuses.

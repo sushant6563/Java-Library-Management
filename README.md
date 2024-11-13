@@ -31,7 +31,7 @@ Before you begin, ensure that you have the following software installed:
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/sushant6563/Java-Management.git
+    git clone https://github.com/sushant6563/Java-Library-Management.git
     cd Library-Management
     ```
 

@@ -1,5 +1,4 @@
-![Library Management System Banner](https://via.placeholder.com/1500x400.png?text=Java+Library+Management+System)  
-*Manage your library with ease using this Java-based Library Management System*
+
 
 # 📚 Java Library Management System
 

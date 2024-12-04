@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="background">
+    <div class="overlay"></div>
+</div>
+
+<!-- Header -->
+<header>
+    <h1>Library Management System</h1>
+</header>
+
+<!-- Main Content -->
+<main>
+    <!-- Welcome Section -->
+    <h2>Welcome to the Library Management System</h2>
+    <p>
+        Manage books, members, and loan records efficiently. Start by logging in below.
+    </p>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <h3>Login</h3>
+        <form id="loginForm">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter Username" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <select id="userType" required>
+                <option value="" disabled selected>Select Role</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+            <button type="submit">Login</button>
+        </form>
+    </section>
+
+    <!-- Manage Books Section -->
+    <section id="manageBooks" style="display: none;">
+        <h3>Manage Books</h3>
+        <button id="addBookBtn">Add Book</button>
+        <table id="booksTable">
+            <thead>
+            <tr>
+                <th>Book ID</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Dynamic Rows -->
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Manage Members Section -->
+    <section id="manageMembers" style="display: none;">
+        <h3>Manage Members</h3>
+        <button id="addMemberBtn">Add Member</button>
+        <table id="membersTable">
+            <thead>
+            <tr>
+                <th>Member ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Dynamic Rows -->
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<!-- Add Book Modal -->
+<div id="addBookModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Add New Book</h3>
+        <form id="addBookForm">
+            <label for="bookId">Book ID</label>
+            <input type="text" id="bookId" required>
+            <label for="bookTitle">Title</label>
+            <input type="text" id="bookTitle" required>
+            <label for="bookAuthor">Author</label>
+            <input type="text" id="bookAuthor" required>
+            <button type="submit">Add Book</button>
+        </form>
+    </div>
+</div>
+
+<!-- Add Member Modal -->
+<div id="addMemberModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Add New Member</h3>
+        <form id="addMemberForm">
+            <label for="memberId">Member ID</label>
+            <input type="text" id="memberId" required>
+            <label for="memberName">Name</label>
+            <input type="text" id="memberName" required>
+            <label for="memberEmail">Email</label>
+            <input type="email" id="memberEmail" required>
+            <button type="submit">Add Member</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Library Management System</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
